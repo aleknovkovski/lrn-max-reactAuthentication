@@ -14,6 +14,17 @@ export async function action({ request }) {
     password: data.get('password'),
   };
 
-  console.log(authData)
+  const searchParams = new URL(request.url).searchParams;
+  const mode = searchParams.get('mode') || 'login';
+
+  const response = await fetch('http://localhost:8080/' + mode, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(authData),
+  });
+
+  console.log(response)
   return redirect('/');
 }
