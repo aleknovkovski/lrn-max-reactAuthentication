@@ -1,5 +1,5 @@
 import AuthForm from '../components/AuthForm';
-import {json} from "react-router-dom";
+import {json, redirect} from "react-router-dom";
 
 function AuthenticationPage() {
   return <AuthForm />;
@@ -8,8 +8,12 @@ function AuthenticationPage() {
 export default AuthenticationPage;
 
 export async function action({ request }) {
-  const searchParams = new URL(request.url).searchParams;
-  const mode = searchParams.get('mode') || 'login';
+  const data = await request.formData();
+  const authData = {
+    email: data.get('email'),
+    password: data.get('password'),
+  };
 
-  console.log(request)
+  console.log(authData)
+  return redirect('/');
 }
