@@ -8,7 +8,14 @@ export function getTokenDuration() {
 }
 
 export function getAuthToken() {
-  return localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+  const tokenDuration = getTokenDuration();
+
+  if (tokenDuration < 0) {
+    return 'EXPIRED';
+  }
+
+  return token;
 }
 
 export function tokenLoader() {
